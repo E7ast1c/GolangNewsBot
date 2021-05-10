@@ -1,7 +1,7 @@
 package blog_golang_org
 
 import (
-	news_provider "NewsFeedBot/tg-bot/news-provider"
+	NewsProvider "NewsFeedBot/tg-bot/news-provider"
 	"NewsFeedBot/transport"
 	"encoding/xml"
 	"errors"
@@ -18,7 +18,7 @@ type BlogGolangOrgFeed struct {
 }
 
 
-func (bgo *BlogGolangOrgFeed) GetNewsFeed(url string) ([]news_provider.ResultFeed, error) {
+func (bgo *BlogGolangOrgFeed) GetNewsFeed(url string) ([]NewsProvider.ResultFeed, error) {
 	body, err := transport.GetRSSFeed(url)
 	if err != nil {
 		return nil, err
@@ -32,10 +32,10 @@ func (bgo *BlogGolangOrgFeed) GetNewsFeed(url string) ([]news_provider.ResultFee
 		return nil, errors.New("nil or empty result struct set")
 	}
 
-	rFeed := make([]news_provider.ResultFeed, 0, len(bgo.Entry))
+	rFeed := make([]NewsProvider.ResultFeed, 0, len(bgo.Entry))
 
 	for i := 0; i < len(bgo.Entry); i++ {
-		rFeed = append(rFeed, news_provider.ResultFeed{
+		rFeed = append(rFeed, NewsProvider.ResultFeed{
 			Title: bgo.Entry[i].Title,
 			Url:   bgo.Entry[i].Link.Href,
 		})
