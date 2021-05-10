@@ -4,17 +4,18 @@ import (
 	"NewsFeedBot/config"
 	tgbot "NewsFeedBot/tg-bot"
 	log "github.com/sirupsen/logrus"
+	"net/http"
 )
 
 func main() {
 	config := config.GetAppConfig()
 
-	//go func() {
-	//	servErr := http.ListenAndServe(":"+config.ServerAddress, nil)
-	//	if servErr != nil {
-	//		log.Fatal(servErr)
-	//	}
-	//}()
+	go func() {
+		servErr := http.ListenAndServe(":"+config.ServerPort, nil)
+		if servErr != nil {
+			log.Fatal(servErr)
+		}
+	}()
 
 	tgBot, err := tgbot.StartBot(*config)
 	if err != nil {
