@@ -3,13 +3,15 @@ package config
 import "github.com/spf13/viper"
 
 type AppConfig struct {
-	BotToken string
+	BotToken      string
 	ServerAddress string
+	WebhookUrl    string
 }
 
 func GetAppConfig() *AppConfig {
 	viper.AutomaticEnv()
 	token := viper.GetString("BOTTOKEN")
+	webhook := viper.GetString("WEBHOOK")
 
 	viper.AddConfigPath("./")
 	viper.SetConfigName("config")
@@ -17,7 +19,8 @@ func GetAppConfig() *AppConfig {
 	serverAddress := viper.GetString("server.port")
 
 	return &AppConfig{
-		BotToken:     token,
+		BotToken:      token,
 		ServerAddress: serverAddress,
+		WebhookUrl:    webhook,
 	}
 }
